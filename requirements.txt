@@ -1,0 +1,4 @@
+ipython
+model-mommy
+Django
+psycopg2
