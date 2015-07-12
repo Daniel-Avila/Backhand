@@ -1,5 +1,4 @@
 /**Created by sparky on 3/21/15.*/
-
 module.exports = function(grunt) {
 
     //noinspection GjsLint
