@@ -11,27 +11,14 @@ angular.module('authServices', ['ngResource'])
         return {
             login: function () {
                 $http.post('/api/v1/login/', {username: $rootScope.username, password: $rootScope.password})
-                    .then(function (response) {
-                        $rootScope.userid = response.data.userid;
+                    .success(function (data, status, headers, config) {
+                        $rootScope.userid = data.userid;
+                    })
+                    .error(function (data, status, headers, config) {
+                        //redirect to a dashboard right here.
+                        $rootScope.message = data;
+                        $rootScope.userid = null;
                     });
             }
         };
     });
-
-
-/**
- *  ['ngResource'])
-
- *  .service('loginService', function($resource) {
-    *      function add_auth_header(data, headersGetter) {
-    *          var headers = headersGetter();
-    *          headers['Authorization'] = ('Basic ' + btoa(data.username + ':' + data.password));
-    *      }
-    *      return {
-    *          auth: $resource('/v1/api/login\\/', {}, {
-    *              login: {method: 'POST', transformRequest: add_auth_header},
-    *              logout: {method: 'DELETE'}
-    *          })
-    *      };
-    *  })
- */

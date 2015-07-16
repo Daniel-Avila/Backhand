@@ -25,28 +25,37 @@ describe('authServices config', function () {
 
 describe('authServices.loginService', function () {
     'use strict';
-    var loginService, $rootScope, $httpBackend;
+    var loginService, $rootScope, $httpBackend, username, password;
     beforeEach(module('authServices'));
     beforeEach(inject(function (_loginService_, _$rootScope_, _$httpBackend_) {
         loginService = _loginService_;
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
+        $rootScope.userid = null;
+        username = 'sparky';
+        password = 'password';
+        $rootScope.username = username;
+        $rootScope.password = password;
     }));
 
     it('should have a login service defined', function () {
         expect(loginService).toBeDefined();
     });
     it('should be able to login a user with good credentials', function () {
-        var username, password, userid;
-        username = 'sparky';
-        password = 'password';
-        userid = username;
-        $rootScope.username = username;
-        $rootScope.password = password;
+
         $httpBackend.expectPOST('/api/v1/login/', {username: username, password: password})
-            .respond({userid: username});
+            .respond(200, {userid: username});
         loginService.login();
         $httpBackend.flush();
-        expect($rootScope.userid).toBe(userid);
+        expect($rootScope.userid).toBe(username);
     });
+    it('should fail to login a bad username/password pair', function () {
+        var expected = 'Username/Password is invalid.';
+        $httpBackend.expectPOST('/api/v1/login/', {username: username, password: password})
+            .respond(404, expected);
+        loginService.login();
+        $httpBackend.flush();
+        expect($rootScope.message).toBe(expected);
+        expect($rootScope.userid).toBe(null);
+    })
 });
