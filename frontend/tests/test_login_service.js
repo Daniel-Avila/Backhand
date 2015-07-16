@@ -25,17 +25,28 @@ describe('authServices config', function () {
 
 describe('authServices.loginService', function () {
     'use strict';
-    var loginService, httpProvider, testedService;
+    var loginService, $rootScope, $httpBackend;
     beforeEach(module('authServices'));
-    beforeEach(inject(function (_loginService_) {
+    beforeEach(inject(function (_loginService_, _$rootScope_, _$httpBackend_) {
         loginService = _loginService_;
+        $rootScope = _$rootScope_;
+        $httpBackend = _$httpBackend_;
     }));
 
     it('should have a login service defined', function () {
         expect(loginService).toBeDefined();
     });
-    it('should have a name property that has an expected value', function () {
-        var expected = 'sparky';
-        expect(loginService.name).toBe(expected);
+    it('should be able to login a user with good credentials', function () {
+        var username, password, userid;
+        username = 'sparky';
+        password = 'password';
+        userid = username;
+        $rootScope.username = username;
+        $rootScope.password = password;
+        $httpBackend.expectPOST('/api/v1/login/', {username: username, password: password})
+            .respond({userid: username});
+        loginService.login();
+        $httpBackend.flush();
+        expect($rootScope.userid).toBe(userid);
     });
 });

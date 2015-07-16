@@ -7,8 +7,15 @@ angular.module('authServices', ['ngResource'])
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     }])
-    .factory('loginService', function () {
-        return {name: 'sparky'};
+    .factory('loginService', function ($rootScope, $http) {
+        return {
+            login: function () {
+                $http.post('/api/v1/login/', {username: $rootScope.username, password: $rootScope.password})
+                    .then(function (response) {
+                        $rootScope.userid = response.data.userid;
+                    });
+            }
+        };
     });
 
 
