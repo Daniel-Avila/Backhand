@@ -1,5 +1,5 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('Backhand', ['LoginController']);
+angular.module('Backhand', ['authServices']);
 
