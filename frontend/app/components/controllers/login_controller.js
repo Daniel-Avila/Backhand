@@ -1,43 +1,27 @@
 /**
  * Created by sparky on 7/14/15.
  */
-angular.module('controllers.LoginController', ['ngResource'])
-    .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    }])
-    .factory('loginService', function ($resource) {
-        function add_auth_header(data, headersGetter) {
-            var headers = headersGetter();
-            headers['Authorization'] = ('Basic ' + btoa(data.username + ':' + data.password));
-        }
-
-        return {
-            auth: $resource('/v1/api/login\\/', {}, {
-                login: {method: 'POST', transformRequest: add_auth_header},
-                logout: {method: 'DELETE'}
-            })
-        };
-    })
-    .controller('loginController', function ($scope, loginControllerFactory) {
-        //$('#id_auth_form input').checkAndTriggerAutoFillEvent();
+angular.module('LoginController', [])
+    .controller('loginController', function ($scope, authService) {
 
         $scope.getCredentials = function () {
             return {username: $scope.username, password: $scope.password};
         };
         $scope.login = function () {
-            loginControllerFactory.auth.login($scope.getCredentials())
-                .$promise
-                .then(function (data) {
-                    $scope.user = data.username;
+            var creds;
+            creds = $scope.getCredentials();
+            authService.login(creds.username, creds.password)
+                .success(function (data, status, headers, config) {
+                    $scope.userid = data.userid;
                 })
-                .catch(function (data) {
-                    alert(data.data.detail);
+                .error(function (data, status, headers, config) {
+                    //redirect to a dashboard right here.
+                    $scope.message = data;
+                    $scope.userid = null;
                 });
         };
-        $scope.logout = function () {
-            loginControllerFactory.auth.logout(function () {
-                $scope.user = undefined;
-            });
-        };
     });
+
+
+
+

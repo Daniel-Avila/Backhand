@@ -42,20 +42,22 @@ describe('authServices.loginService', function () {
         expect(loginService).toBeDefined();
     });
     it('should be able to login a user with good credentials', function () {
-
+        var result;
         $httpBackend.expectPOST('/api/v1/login/', {username: username, password: password})
             .respond(200, {userid: username});
-        loginService.login();
+        result = loginService.login(username, password);
         $httpBackend.flush();
-        expect($rootScope.userid).toBe(username);
+        expect(result.$$state.value.status).toEqual(200);
+        expect(result.$$state.value.data.userid).toEqual(username);
     });
     it('should fail to login a bad username/password pair', function () {
+        var result;
         var expected = 'Username/Password is invalid.';
         $httpBackend.expectPOST('/api/v1/login/', {username: username, password: password})
             .respond(404, expected);
-        loginService.login();
+        result = loginService.login(username, password);
         $httpBackend.flush();
-        expect($rootScope.message).toBe(expected);
-        expect($rootScope.userid).toBe(null);
+        expect(result.$$state.value.status).toEqual(404);
+        expect(result.$$state.value.data).toEqual(expected);
     })
 });
