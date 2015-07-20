@@ -18,6 +18,7 @@ angular.module('BackhandControllers', [])
                 .error(function (data, status, headers, config) {
                     //redirect to a dashboard right here.
 
+                    $location.path(cst.APP.LOGIN);
                     $scope.message = data.non_field_errors[0];
                     $scope.authtoken = null;
                 });

@@ -35,11 +35,13 @@ describe('LoginController', function () {
         $httpBackend.flush();
         expect($scope.authtoken).toEqual(null);
         expect($scope.message).toEqual(expected_msg.non_field_errors[0]);
+        expect($location.path()).toEqual(cst.APP.LOGIN);
     });
     it('should redirect the user to the /dashboard upon success', function () {
         var $scope = {username: 'sparky', password: 'pass'};
         var loginController = $controller('loginController', {$scope: $scope});
         var authkey = 'mak';
+        $location.path(cst.APP.LOGIN);
         $httpBackend.expectPOST(cst.REST.LOGIN, {username: 'sparky', password: 'pass'})
             .respond(200, {key: authkey}, {}, 'OK');
         $scope.login();
