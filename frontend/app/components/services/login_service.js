@@ -10,7 +10,7 @@ angular.module('authServices', ['ngResource'])
     .factory('loginService', function ($http) {
         return {
             login: function (user, pass) {
-                return $http.post('/api/v1/login/', {username: user, password: pass});
+                return $http.post(cst.REST.LOGIN, {username: user, password: pass});
             }
         };
     });

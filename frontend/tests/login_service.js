@@ -25,9 +25,10 @@ describe('authServices config', function () {
 
 describe('authServices.loginService', function () {
     'use strict';
-    var loginService, $rootScope, $httpBackend, username, password;
+    var loginService, $rootScope, $httpBackend, cst, username, password;
     beforeEach(module('authServices'));
-    beforeEach(inject(function (_loginService_, _$rootScope_, _$httpBackend_) {
+    beforeEach(module('Backhand'));
+    beforeEach(inject(function (_loginService_, _$rootScope_, _$httpBackend_, _cst_) {
         loginService = _loginService_;
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
@@ -36,28 +37,30 @@ describe('authServices.loginService', function () {
         password = 'password';
         $rootScope.username = username;
         $rootScope.password = password;
+        cst = _cst_;
     }));
 
     it('should have a login service defined', function () {
         expect(loginService).toBeDefined();
     });
     it('should be able to login a user with good credentials', function () {
-        var result;
-        $httpBackend.expectPOST('/api/v1/login/', {username: username, password: password})
-            .respond(200, {userid: username});
+        var result, authkey;
+        authkey = 'myauthkey';
+        $httpBackend.expectPOST(cst.REST.LOGIN, {username: username, password: password})
+            .respond(200, {key: authkey});
         result = loginService.login(username, password);
         $httpBackend.flush();
         expect(result.$$state.value.status).toEqual(200);
-        expect(result.$$state.value.data.userid).toEqual(username);
+        expect(result.$$state.value.data.key).toEqual(authkey);
     });
     it('should fail to login a bad username/password pair', function () {
         var result;
         var expected = 'Username/Password is invalid.';
-        $httpBackend.expectPOST('/api/v1/login/', {username: username, password: password})
-            .respond(404, expected);
+        $httpBackend.expectPOST(cst.REST.LOGIN, {username: username, password: password})
+            .respond(400, expected);
         result = loginService.login(username, password);
         $httpBackend.flush();
-        expect(result.$$state.value.status).toEqual(404);
+        expect(result.$$state.value.status).toEqual(400);
         expect(result.$$state.value.data).toEqual(expected);
     })
 });
