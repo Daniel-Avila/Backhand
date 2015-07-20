@@ -3,11 +3,12 @@
  */
 
 describe('LoginController', function () {
-    var $controller, $httpBackend;
+    var $controller, $httpBackend, $location;
     beforeEach(module('Backhand'));
-    beforeEach(inject(function (_$controller_, _$httpBackend_, _cst_) {
+    beforeEach(inject(function (_$controller_, _$location_, _$httpBackend_, _cst_) {
         $controller = _$controller_;
         $httpBackend = _$httpBackend_;
+        $location = _$location_;
         cst = _cst_;
 
 
@@ -36,6 +37,14 @@ describe('LoginController', function () {
         expect($scope.message).toEqual(expected_msg.non_field_errors[0]);
     });
     it('should redirect the user to the /dashboard upon success', function () {
+        var $scope = {username: 'sparky', password: 'pass'};
+        var loginController = $controller('loginController', {$scope: $scope});
+        var authkey = 'mak';
+        $httpBackend.expectPOST(cst.REST.LOGIN, {username: 'sparky', password: 'pass'})
+            .respond(200, {key: authkey}, {}, 'OK');
+        $scope.login();
+        $httpBackend.flush();
+        expect($location.path()).toEqual(cst.APP.DASHBOARD);
 
     });
 });
