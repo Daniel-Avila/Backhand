@@ -7,7 +7,7 @@ angular.module('authServices', ['ngResource'])
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     }])
-    .factory('loginService', function ($http) {
+    .factory('loginService', function ($http, cst) {
         return {
             login: function (user, pass) {
                 return $http.post(cst.REST.LOGIN, {username: user, password: pass});

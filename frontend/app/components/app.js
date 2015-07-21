@@ -1,19 +1,19 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('Backhand', ['authServices', 'ngRoute', 'BackhandControllers'])
+angular.module('Backhand', ['authServices', 'ngRoute', 'BackhandControllers', 'ui.bootstrap'])
     .config(function ($routeProvider, cst) {
         $routeProvider
             .when(cst.APP.HOME, {
-                templateUrl: 'home.html',
+                templateUrl: 'templates/home.html',
                 controller: 'HomeController'
             })
             .when(cst.APP.LOGIN, {
-                templateUrl: 'login.html',
+                templateUrl: 'templates/login.html',
                 controller: 'loginController'
             })
             .when(cst.APP.DASHBOARD, {
-                templateUrl: 'dashboard.html',
+                templateUrl: 'templates/dashboard.html',
                 controller: 'dashboardController'
             });
 
@@ -25,6 +25,6 @@ angular.module('Backhand', ['authServices', 'ngRoute', 'BackhandControllers'])
             HOME: '/'
         },
         REST: {
-            LOGIN: '/rest-auth/login/'
+            LOGIN: '/api/v1/auth/login/'
         }
     });

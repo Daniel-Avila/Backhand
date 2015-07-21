@@ -34,7 +34,7 @@ describe('LoginController', function () {
         $scope.login();
         $httpBackend.flush();
         expect($scope.authtoken).toEqual(null);
-        expect($scope.message).toEqual(expected_msg.non_field_errors[0]);
+        expect($scope.errors).toEqual(expected_msg);
         expect($location.path()).toEqual(cst.APP.LOGIN);
     });
     it('should redirect the user to the /dashboard upon success', function () {
