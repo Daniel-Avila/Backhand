@@ -22,8 +22,21 @@ describe('authServices config', function () {
     });
 });
 
+describe('AuthServices.loginService.isLoggedIn', function () {
+    'use strict';
+    var loginService, cst;
+    beforeEach(module('authServices'));
+    beforeEach(module('Backhand'));
+    beforeEach(inject(function (_loginService_, _cst_) {
+        loginService = _loginService_;
+        cst = _cst_;
+    }));
+    it('should return false if user is not logged in', function () {
+        expect(loginService.isLoggedIn()).toBe(false);
+    });
+});
 
-describe('authServices.loginService', function () {
+describe('authServices.loginService.login', function () {
     'use strict';
     var loginService, $rootScope, $httpBackend, cst, username, password;
     beforeEach(module('authServices'));

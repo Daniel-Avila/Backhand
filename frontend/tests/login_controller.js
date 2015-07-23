@@ -19,6 +19,8 @@ describe('LoginController', function () {
         var authkey = 'mak';
         $httpBackend.expectPOST(cst.REST.LOGIN, {username: 'sparky', password: 'pass'})
             .respond(200, {key: authkey}, {}, 'OK');
+        $httpBackend.whenGET(cst.TEMPLATES.DASHBOARD).respond(200);
+        $httpBackend.whenGET(cst.TEMPLATES.HOME).respond(200);
         $scope.login();
         $httpBackend.flush();
         expect($scope.authtoken).toEqual(authkey);
@@ -29,6 +31,8 @@ describe('LoginController', function () {
         var $scope = {username: 'sparky', password: 'pass'};
         var loginController = $controller('loginController', {$scope: $scope});
         var expected_msg = {non_field_errors: ["Unable to log in with provided credentials."]};
+        $httpBackend.whenGET(cst.TEMPLATES.HOME).respond(200);
+        $httpBackend.whenGET(cst.TEMPLATES.LOGIN).respond(200);
         $httpBackend.expectPOST(cst.REST.LOGIN, {username: 'sparky', password: 'pass'})
             .respond(400, expected_msg, {}, 'Not Found');
         $scope.login();
@@ -42,11 +46,14 @@ describe('LoginController', function () {
         var loginController = $controller('loginController', {$scope: $scope});
         var authkey = 'mak';
         $location.path(cst.APP.LOGIN);
+        $httpBackend.whenGET(cst.TEMPLATES.HOME).respond(200);
+        $httpBackend.whenGET(cst.TEMPLATES.LOGIN).respond(200);
+        $httpBackend.whenGET(cst.TEMPLATES.DASHBOARD).respond(200);
         $httpBackend.expectPOST(cst.REST.LOGIN, {username: 'sparky', password: 'pass'})
             .respond(200, {key: authkey}, {}, 'OK');
         $scope.login();
         $httpBackend.flush();
         expect($location.path()).toEqual(cst.APP.DASHBOARD);
-
+        expect($scope.authtoken).toEqual(authkey);
     });
 });

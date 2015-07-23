@@ -11,6 +11,9 @@ angular.module('authServices', ['ngResource'])
         return {
             login: function (user, pass) {
                 return $http.post(cst.REST.LOGIN, {username: user, password: pass});
+            },
+            isLoggedIn: function () {
+                return false;
             }
         };
     });
