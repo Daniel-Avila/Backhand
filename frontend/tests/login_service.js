@@ -22,17 +22,17 @@ describe('authServices config', function () {
     });
 });
 
-describe('AuthServices.loginService.isLoggedIn', function () {
+describe('AuthServices.authState.isLoggedIn', function () {
     'use strict';
-    var loginService, cst;
+    var authState, cst;
     beforeEach(module('authServices'));
     beforeEach(module('Backhand'));
-    beforeEach(inject(function (_loginService_, _cst_) {
-        loginService = _loginService_;
+    beforeEach(inject(function (_authState_, _cst_) {
+        authState = _authState_;
         cst = _cst_;
     }));
     it('should return false if user is not logged in', function () {
-        expect(loginService.isLoggedIn()).toBe(false);
+        expect(authState.isLoggedIn()).toBe(false);
     });
 });
 

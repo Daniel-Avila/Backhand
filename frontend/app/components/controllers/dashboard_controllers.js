@@ -3,12 +3,10 @@
  */
 angular.module('DashboardControllers', [])
     .controller('dashboardController',
-    ['$state', '$scope', 'cst', function ($state, $scope, cst) {
-        if ($scope.authtoken === null) {
-            alert($scope.authtoken);
+    ['$state', '$scope', 'authState', 'cst', function ($state, $scope, authState, cst) {
+        if (authState.authenticated === false) {
             $state.go(cst.STATE.LOGIN);
-        } else if ($scope.authtoken === undefined) {
-            alert($scope.authtoken);
+        } else if (authState.authenticated === undefined) {
             $state.go(cst.STATE.LOGIN);
         } else {
         }
