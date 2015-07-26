@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp', [
+angular.module('Backhand', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
     'ngRoute',
 ])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider, $httpProvider) {
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -104,5 +106,5 @@ angular.module('angularDjangoRegistrationAuthApp', [
             });
     })
     .run(function (djangoAuth) {
-        djangoAuth.initialize('//127.0.0.1:8000/rest-auth', false);
+        djangoAuth.initialize('//localhost:9050/api/v1/auth', false);
     });

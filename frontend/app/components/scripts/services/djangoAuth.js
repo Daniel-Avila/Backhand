@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('Backhand')
     .service('djangoAuth', function djangoAuth($q, $http, $cookies, $rootScope) {
         // AngularJS will instantiate a singleton by calling "new" on this function
         var service = {

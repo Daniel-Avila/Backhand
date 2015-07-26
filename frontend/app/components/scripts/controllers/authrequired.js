@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name angularDjangoRegistrationAuthApp.controller:AuthrequiredCtrl
+ * @name Backhand.controller:AuthrequiredCtrl
  * @description
  * # AuthrequiredCtrl
- * Controller of the angularDjangoRegistrationAuthApp
+ * Controller of the Backhand
  */
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('Backhand')
     .controller('AuthrequiredCtrl', function ($scope) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',

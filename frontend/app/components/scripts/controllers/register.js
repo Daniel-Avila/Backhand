@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('Backhand')
     .controller('RegisterCtrl', function ($scope, djangoAuth, Validate) {
         $scope.model = {'username': '', 'password': '', 'email': ''};
         $scope.complete = false;

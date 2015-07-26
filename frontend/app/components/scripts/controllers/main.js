@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('Backhand')
     .controller('MainCtrl', function ($scope, $cookies, $location, djangoAuth) {
 
         $scope.login = function () {
