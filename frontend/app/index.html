@@ -29,11 +29,11 @@
         <ul class="nav nav-pills pull-right">
             <li class="active"><a ng-href="#/">Home</a></li>
         </ul>
-        <h3 class="text-muted">Angular Django Registration Auth Demo</h3>
+        <h3 class="text-muted">Backhand Demo</h3>
     </div>
 
     <!-- Add your site or application content here -->
-    <div ng-view=""></div>
+    <div ui-view=""></div>
 </div>
 
 
@@ -50,27 +50,28 @@
 <script type="application/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
 <script type="application/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script type="application/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script type="application/javascript" src="bower_components/angular-route/angular-route.js"></script>
+<script type="application/javascript"
+        src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script type="application/javascript" src="components/app.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/app.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/main.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/register.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/passwordreset.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/passwordresetconfirm.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/login.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/verifyemail.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/logout.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/userprofile.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/passwordchange.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/services/djangoAuth.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/services/validate.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/master.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/restricted.js"></script>
-<script type="application/javascript" src="components/apps/reg_auth/controllers/authrequired.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/app.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/main.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/register.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/passwordreset.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/passwordresetconfirm.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/login.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/verifyemail.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/logout.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/userprofile.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/passwordchange.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/services/djangoAuth.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/services/validate.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/master.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/restricted.js"></script>
+<script type="application/javascript" src="components/apps/rest_auth/controllers/authrequired.js"></script>
 <!-- endbuild -->
 
 </body>
