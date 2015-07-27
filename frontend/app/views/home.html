@@ -1,0 +1,7 @@
+<div id="home_view" ng-controller="MainCtrl">
+    <div ng-if="authenticated" ng-init="redirectDashboard()"></div>
+    <div ng-if="!authenticated">
+        <h3>Please log in to play with Backand</h3>
+    </div>
+
+</div>
