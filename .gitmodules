@@ -1,0 +1,3 @@
+[submodule "frontend/app/components/apps/rest_auth"]
+	path = frontend/app/components/apps/rest_auth
+	url = git@github.com:Daniel-Avila/angular-django-registration-auth.git
