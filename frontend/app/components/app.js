@@ -5,6 +5,16 @@ angular.module('Backhand', ['angularDjangoRegistrationAuthApp'])
     .config(['$stateProvider', '$urlRouterProvider',
         function ($stateProvider) {
             $stateProvider
+                .state('dashboard', {
+                    url: '/dashboard',
+                    templateUrl: 'views/dashboard.html',
+                    controller: 'DashboardController',
+                    resolve: {
+                        authenticated: ['djangoAuth', function (djangoAuth) {
+                            return djangoAuth.authenticationStatus();
+                        }]
+                    }
+                })
                 .state('preferences', {
                     url: '/preferences',
                     templateUrl: 'views/preferences.html',
