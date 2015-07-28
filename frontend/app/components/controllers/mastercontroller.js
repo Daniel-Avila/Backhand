@@ -12,3 +12,9 @@ angular.module('Backhand')
             $state.go('dashboard');
         })
     });
+
+/**
+ The above is an example of how to override functionality on another controller.
+ AngularJS doesn't use inheritance for controllers but that doesn't mean you cannot
+ change functionality of an established controller.
+ */
