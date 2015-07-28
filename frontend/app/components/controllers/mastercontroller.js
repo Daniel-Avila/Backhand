@@ -7,7 +7,7 @@
 angular.module('Backhand')
     .controller('MasterController', function ($scope, $state, $controller) {
         $controller('MasterCtrl', {$scope: $scope});
-        $scope.$on('djangoAuth.logged_in', function (data) {
+        $scope.$on('djangoAuth.logged_in', function () {
             $scope.authenticated = true;
             $state.go('dashboard');
         })
