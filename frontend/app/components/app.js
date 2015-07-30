@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('Backhand', ['angularDjangoRegistrationAuthApp'])
+angular.module('Backhand', ['ui.bootstrap', 'angularDjangoRegistrationAuthApp'])
     .config(['$stateProvider', '$urlRouterProvider',
         function ($stateProvider) {
             $stateProvider
