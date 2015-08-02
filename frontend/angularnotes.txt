@@ -1,1 +1,0 @@
-http://stackoverflow.com/questions/21483555/angular-js-best-practice-extending-controllers-overriding-controller-defaults

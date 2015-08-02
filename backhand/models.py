@@ -2,8 +2,8 @@
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
-#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 #
 # Also note: You'll have to insert the output of 'django-admin sqlcustom [app_label]'
 # into your database.
@@ -12,89 +12,89 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class BHAccountPreferenceAssoc(models.Model):
+class RvAccountPreferenceAssoc(models.Model):
     account_id = models.IntegerField()
     preference_id = models.IntegerField()
     value = models.TextField()
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_account_preference_assoc'
         unique_together = (('account_id', 'preference_id'),)
 
 
-class BHAccountUserAssoc(models.Model):
+class RvAccountUserAssoc(models.Model):
     account_id = models.IntegerField()
     user_id = models.IntegerField()
     linked = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_account_user_assoc'
         unique_together = (('account_id', 'user_id'),)
 
 
-class BHAccountUserPermissionAssoc(models.Model):
+class RvAccountUserPermissionAssoc(models.Model):
     account_id = models.IntegerField()
     user_id = models.IntegerField()
     permission_id = models.IntegerField()
     is_allowed = models.SmallIntegerField()
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_account_user_permission_assoc'
         unique_together = (('account_id', 'user_id', 'permission_id'),)
 
 
-class BHAccounts(models.Model):
+class RvAccounts(models.Model):
     account_id = models.AutoField(primary_key=True)
     account_type = models.CharField(max_length=16)
     account_name = models.CharField(max_length=255, blank=True, null=True)
-    m2m_password = models.CharField(max_length=32, blank=True, null=True)
-    m2m_ticket = models.CharField(max_length=32, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_accounts'
 
 
-class BHAcls(models.Model):
+class RvAcls(models.Model):
     bannerid = models.IntegerField()
     logical = models.CharField(max_length=3)
-    acltype = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)
     comparison = models.CharField(max_length=2)
     data = models.TextField()
     executionorder = models.IntegerField()
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_acls'
         unique_together = (('bannerid', 'executionorder'),)
 
 
-class BHAclsChannel(models.Model):
+class RvAclsChannel(models.Model):
     channelid = models.IntegerField()
     logical = models.CharField(max_length=3)
-    acltype = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)
     comparison = models.CharField(max_length=2)
     data = models.TextField()
     executionorder = models.IntegerField()
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_acls_channel'
         unique_together = (('channelid', 'executionorder'),)
 
 
-class BHAdCategoryAssoc(models.Model):
+class RvAdCategoryAssoc(models.Model):
     ad_category_assoc_id = models.AutoField(primary_key=True)
     category_id = models.IntegerField()
     ad_id = models.IntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_ad_category_assoc'
 
 
-class BHAdZoneAssoc(models.Model):
+class RvAdZoneAssoc(models.Model):
     ad_zone_assoc_id = models.AutoField(primary_key=True)
     zone_id = models.IntegerField(blank=True, null=True)
     ad_id = models.IntegerField(blank=True, null=True)
@@ -104,10 +104,11 @@ class BHAdZoneAssoc(models.Model):
     to_be_delivered = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_ad_zone_assoc'
 
 
-class BHAffiliates(models.Model):
+class RvAffiliates(models.Model):
     affiliateid = models.AutoField(primary_key=True)
     agencyid = models.IntegerField()
     name = models.CharField(max_length=255)
@@ -117,18 +118,17 @@ class BHAffiliates(models.Model):
     email = models.CharField(max_length=64)
     website = models.CharField(max_length=255, blank=True, null=True)
     updated = models.DateTimeField(blank=True, null=True)
-    an_website_id = models.IntegerField(blank=True, null=True)
     oac_country_code = models.CharField(max_length=2)
     oac_language_id = models.IntegerField(blank=True, null=True)
     oac_category_id = models.IntegerField(blank=True, null=True)
-    as_website_id = models.IntegerField(blank=True, null=True)
     account_id = models.IntegerField(unique=True, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_affiliates'
 
 
-class BHAffiliatesExtra(models.Model):
+class RvAffiliatesExtra(models.Model):
     affiliateid = models.IntegerField(primary_key=True)
     address = models.TextField(blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
@@ -148,10 +148,11 @@ class BHAffiliatesExtra(models.Model):
     help_file = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_affiliates_extra'
 
 
-class BHAgency(models.Model):
+class RvAgency(models.Model):
     agencyid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     contact = models.CharField(max_length=255, blank=True, null=True)
@@ -162,18 +163,20 @@ class BHAgency(models.Model):
     account_id = models.IntegerField(unique=True, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_agency'
 
 
-class BHApplicationVariable(models.Model):
+class RvApplicationVariable(models.Model):
     name = models.CharField(primary_key=True, max_length=255)
     value = models.TextField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_application_variable'
 
 
-class BHAudit(models.Model):
+class RvAudit(models.Model):
     auditid = models.AutoField(primary_key=True)
     actionid = models.IntegerField()
     context = models.CharField(max_length=255)
@@ -189,10 +192,11 @@ class BHAudit(models.Model):
     website_account_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_audit'
 
 
-class BHBanners(models.Model):
+class RvBanners(models.Model):
     bannerid = models.AutoField(primary_key=True)
     campaignid = models.IntegerField()
     contenttype = models.TextField()
@@ -229,19 +233,17 @@ class BHBanners(models.Model):
     keyword = models.CharField(max_length=255)
     transparent = models.SmallIntegerField()
     parameters = models.TextField(blank=True, null=True)
-    an_banner_id = models.IntegerField(blank=True, null=True)
-    as_banner_id = models.IntegerField(blank=True, null=True)
     status = models.IntegerField()
-    ad_direct_status = models.SmallIntegerField()
-    ad_direct_rejection_reason_id = models.SmallIntegerField()
     ext_bannertype = models.CharField(max_length=255, blank=True, null=True)
     prepend = models.TextField()
+    iframe_friendly = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_banners'
 
 
-class BHCampaigns(models.Model):
+class RvCampaigns(models.Model):
     campaignid = models.AutoField(primary_key=True)
     campaignname = models.CharField(max_length=255)
     clientid = models.IntegerField()
@@ -262,11 +264,7 @@ class BHCampaigns(models.Model):
     block = models.IntegerField()
     capping = models.IntegerField()
     session_capping = models.IntegerField()
-    an_campaign_id = models.IntegerField(blank=True, null=True)
-    as_campaign_id = models.IntegerField(blank=True, null=True)
     status = models.IntegerField()
-    an_status = models.IntegerField()
-    as_reject_reason = models.IntegerField()
     hosted_views = models.IntegerField()
     hosted_clicks = models.IntegerField()
     viewwindow = models.IntegerField()
@@ -280,28 +278,31 @@ class BHCampaigns(models.Model):
     show_capped_no_cookie = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_campaigns'
 
 
-class BHCampaignsTrackers(models.Model):
+class RvCampaignsTrackers(models.Model):
     campaign_trackerid = models.AutoField(primary_key=True)
     campaignid = models.IntegerField()
     trackerid = models.IntegerField()
     status = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_campaigns_trackers'
 
 
-class BHCategory(models.Model):
+class RvCategory(models.Model):
     category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_category'
 
 
-class BHChannel(models.Model):
+class RvChannel(models.Model):
     channelid = models.AutoField(primary_key=True)
     agencyid = models.IntegerField()
     affiliateid = models.IntegerField()
@@ -315,10 +316,11 @@ class BHChannel(models.Model):
     acls_updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_channel'
 
 
-class BHClients(models.Model):
+class RvClients(models.Model):
     clientid = models.AutoField(primary_key=True)
     agencyid = models.IntegerField()
     clientname = models.CharField(max_length=255)
@@ -330,17 +332,16 @@ class BHClients(models.Model):
     reportdeactivate = models.BooleanField()
     comments = models.TextField(blank=True, null=True)
     updated = models.DateTimeField(blank=True, null=True)
-    an_adnetwork_id = models.IntegerField(blank=True, null=True)
-    as_advertiser_id = models.IntegerField(blank=True, null=True)
     account_id = models.IntegerField(unique=True, blank=True, null=True)
     advertiser_limitation = models.SmallIntegerField()
     type = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_clients'
 
 
-class BHDataIntermediateAd(models.Model):
+class RvDataIntermediateAd(models.Model):
     data_intermediate_ad_id = models.BigIntegerField(primary_key=True)
     date_time = models.DateTimeField(blank=True, null=True)
     operation_interval = models.IntegerField()
@@ -359,10 +360,11 @@ class BHDataIntermediateAd(models.Model):
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_intermediate_ad'
 
 
-class BHDataIntermediateAdConnection(models.Model):
+class RvDataIntermediateAdConnection(models.Model):
     data_intermediate_ad_connection_id = models.BigIntegerField(primary_key=True)
     server_raw_ip = models.CharField(max_length=16)
     server_raw_tracker_impression_id = models.BigIntegerField()
@@ -412,20 +414,22 @@ class BHDataIntermediateAdConnection(models.Model):
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_intermediate_ad_connection'
 
 
-class BHDataIntermediateAdVariableValue(models.Model):
+class RvDataIntermediateAdVariableValue(models.Model):
     data_intermediate_ad_variable_value_id = models.BigIntegerField(primary_key=True)
     data_intermediate_ad_connection_id = models.BigIntegerField()
     tracker_variable_id = models.IntegerField()
     value = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_intermediate_ad_variable_value'
 
 
-class BHDataRawAdClick(models.Model):
+class RvDataRawAdClick(models.Model):
     viewer_id = models.CharField(max_length=32, blank=True, null=True)
     viewer_session_id = models.CharField(max_length=32, blank=True, null=True)
     date_time = models.DateTimeField(blank=True, null=True)
@@ -460,10 +464,11 @@ class BHDataRawAdClick(models.Model):
     geo_continent = models.CharField(max_length=13, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_raw_ad_click'
 
 
-class BHDataRawAdImpression(models.Model):
+class RvDataRawAdImpression(models.Model):
     viewer_id = models.CharField(max_length=32, blank=True, null=True)
     viewer_session_id = models.CharField(max_length=32, blank=True, null=True)
     date_time = models.DateTimeField(blank=True, null=True)
@@ -498,10 +503,11 @@ class BHDataRawAdImpression(models.Model):
     geo_continent = models.CharField(max_length=13, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_raw_ad_impression'
 
 
-class BHDataRawAdRequest(models.Model):
+class RvDataRawAdRequest(models.Model):
     viewer_id = models.CharField(max_length=32, blank=True, null=True)
     viewer_session_id = models.CharField(max_length=32, blank=True, null=True)
     date_time = models.DateTimeField(blank=True, null=True)
@@ -525,10 +531,11 @@ class BHDataRawAdRequest(models.Model):
     max_https = models.SmallIntegerField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_raw_ad_request'
 
 
-class BHDataRawTrackerImpression(models.Model):
+class RvDataRawTrackerImpression(models.Model):
     server_raw_tracker_impression_id = models.BigIntegerField()
     server_raw_ip = models.CharField(max_length=16)
     viewer_id = models.CharField(max_length=32)
@@ -563,12 +570,12 @@ class BHDataRawTrackerImpression(models.Model):
     geo_continent = models.CharField(max_length=13, blank=True, null=True)
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_data_raw_tracker_impression'
         unique_together = (('server_raw_tracker_impression_id', 'server_raw_ip'),)
 
 
-class BHDataRawTrackerVariableValue(models.Model):
+class RvDataRawTrackerVariableValue(models.Model):
     server_raw_tracker_impression_id = models.BigIntegerField()
     server_raw_ip = models.CharField(max_length=16)
     tracker_variable_id = models.IntegerField()
@@ -576,12 +583,12 @@ class BHDataRawTrackerVariableValue(models.Model):
     value = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_data_raw_tracker_variable_value'
         unique_together = (('server_raw_tracker_impression_id', 'server_raw_ip', 'tracker_variable_id'),)
 
 
-class BHDataSummaryAdHourly(models.Model):
+class RvDataSummaryAdHourly(models.Model):
     data_summary_ad_hourly_id = models.BigIntegerField(primary_key=True)
     date_time = models.DateTimeField(blank=True, null=True)
     ad_id = models.IntegerField()
@@ -599,10 +606,11 @@ class BHDataSummaryAdHourly(models.Model):
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_summary_ad_hourly'
 
 
-class BHDataSummaryAdZoneAssoc(models.Model):
+class RvDataSummaryAdZoneAssoc(models.Model):
     data_summary_ad_zone_assoc_id = models.BigIntegerField(primary_key=True)
     operation_interval = models.IntegerField()
     operation_interval_id = models.IntegerField()
@@ -623,10 +631,11 @@ class BHDataSummaryAdZoneAssoc(models.Model):
     to_be_delivered = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_summary_ad_zone_assoc'
 
 
-class BHDataSummaryChannelDaily(models.Model):
+class RvDataSummaryChannelDaily(models.Model):
     data_summary_channel_daily_id = models.BigIntegerField(primary_key=True)
     day = models.DateField(blank=True, null=True)
     channel_id = models.IntegerField()
@@ -635,10 +644,11 @@ class BHDataSummaryChannelDaily(models.Model):
     actual_impressions = models.IntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_summary_channel_daily'
 
 
-class BHDataSummaryZoneImpressionHistory(models.Model):
+class RvDataSummaryZoneImpressionHistory(models.Model):
     data_summary_zone_impression_history_id = models.BigIntegerField(primary_key=True)
     operation_interval = models.IntegerField()
     operation_interval_id = models.IntegerField()
@@ -650,10 +660,11 @@ class BHDataSummaryZoneImpressionHistory(models.Model):
     est = models.SmallIntegerField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_data_summary_zone_impression_history'
 
 
-class BHDatabaseAction(models.Model):
+class RvDatabaseAction(models.Model):
     database_action_id = models.AutoField(primary_key=True)
     upgrade_action_id = models.IntegerField(blank=True, null=True)
     schema_name = models.CharField(max_length=64, blank=True, null=True)
@@ -668,19 +679,21 @@ class BHDatabaseAction(models.Model):
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_database_action'
 
 
-class BHImages(models.Model):
+class RvImages(models.Model):
     filename = models.CharField(primary_key=True, max_length=128)
     contents = models.BinaryField()
     t_stamp = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_images'
 
 
-class BHLogMaintenanceForecasting(models.Model):
+class RvLogMaintenanceForecasting(models.Model):
     log_maintenance_forecasting_id = models.AutoField(primary_key=True)
     start_run = models.DateTimeField(blank=True, null=True)
     end_run = models.DateTimeField(blank=True, null=True)
@@ -689,10 +702,11 @@ class BHLogMaintenanceForecasting(models.Model):
     updated_to = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_log_maintenance_forecasting'
 
 
-class BHLogMaintenancePriority(models.Model):
+class RvLogMaintenancePriority(models.Model):
     log_maintenance_priority_id = models.AutoField(primary_key=True)
     start_run = models.DateTimeField(blank=True, null=True)
     end_run = models.DateTimeField(blank=True, null=True)
@@ -702,10 +716,11 @@ class BHLogMaintenancePriority(models.Model):
     updated_to = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_log_maintenance_priority'
 
 
-class BHLogMaintenanceStatistics(models.Model):
+class RvLogMaintenanceStatistics(models.Model):
     log_maintenance_statistics_id = models.AutoField(primary_key=True)
     start_run = models.DateTimeField(blank=True, null=True)
     end_run = models.DateTimeField(blank=True, null=True)
@@ -716,49 +731,53 @@ class BHLogMaintenanceStatistics(models.Model):
     updated_to = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_log_maintenance_statistics'
 
 
-class BHPasswordRecovery(models.Model):
+class RvPasswordRecovery(models.Model):
     user_type = models.CharField(max_length=64)
     user_id = models.IntegerField()
     recovery_id = models.CharField(unique=True, max_length=64)
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_password_recovery'
         unique_together = (('user_type', 'user_id'),)
 
 
-class BHPlacementZoneAssoc(models.Model):
+class RvPlacementZoneAssoc(models.Model):
     placement_zone_assoc_id = models.AutoField(primary_key=True)
     zone_id = models.IntegerField(blank=True, null=True)
     placement_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_placement_zone_assoc'
 
 
-class BHPreferences(models.Model):
+class RvPreferences(models.Model):
     preference_id = models.AutoField(primary_key=True)
     preference_name = models.CharField(unique=True, max_length=64)
     account_type = models.CharField(max_length=16)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_preferences'
 
 
-class BHSession(models.Model):
+class RvSession(models.Model):
     sessionid = models.CharField(primary_key=True, max_length=32)
     sessiondata = models.TextField()
     lastused = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_session'
 
 
-class BHTargetstats(models.Model):
+class RvTargetstats(models.Model):
     day = models.DateField(blank=True, null=True)
     campaignid = models.IntegerField()
     target = models.IntegerField()
@@ -766,10 +785,11 @@ class BHTargetstats(models.Model):
     modified = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_targetstats'
 
 
-class BHTrackerAppend(models.Model):
+class RvTrackerAppend(models.Model):
     tracker_append_id = models.AutoField(primary_key=True)
     tracker_id = models.IntegerField()
     rank = models.IntegerField()
@@ -778,10 +798,11 @@ class BHTrackerAppend(models.Model):
     autotrack = models.BooleanField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_tracker_append'
 
 
-class BHTrackers(models.Model):
+class RvTrackers(models.Model):
     trackerid = models.AutoField(primary_key=True)
     trackername = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
@@ -797,10 +818,11 @@ class BHTrackers(models.Model):
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_trackers'
 
 
-class BHUpgradeAction(models.Model):
+class RvUpgradeAction(models.Model):
     upgrade_action_id = models.AutoField(primary_key=True)
     upgrade_name = models.CharField(max_length=128, blank=True, null=True)
     version_to = models.CharField(max_length=64)
@@ -812,10 +834,11 @@ class BHUpgradeAction(models.Model):
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_upgrade_action'
 
 
-class BHUserlog(models.Model):
+class RvUserlog(models.Model):
     userlogid = models.AutoField(primary_key=True)
     timestamp = models.IntegerField()
     usertype = models.SmallIntegerField()
@@ -825,10 +848,11 @@ class BHUserlog(models.Model):
     details = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_userlog'
 
 
-class BHUsers(models.Model):
+class RvUsers(models.Model):
     user_id = models.AutoField(primary_key=True)
     contact_name = models.CharField(max_length=255)
     email_address = models.CharField(max_length=64)
@@ -844,21 +868,22 @@ class BHUsers(models.Model):
     email_updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_users'
 
 
-class BHVariablePublisher(models.Model):
+class RvVariablePublisher(models.Model):
     variable_id = models.IntegerField()
     publisher_id = models.IntegerField()
     visible = models.SmallIntegerField()
 
     class Meta:
-        managed = True
-
+        managed = False
+        db_table = 'rv_variable_publisher'
         unique_together = (('variable_id', 'publisher_id'),)
 
 
-class BHVariables(models.Model):
+class RvVariables(models.Model):
     variableid = models.AutoField(primary_key=True)
     trackerid = models.IntegerField()
     name = models.CharField(max_length=250)
@@ -873,10 +898,11 @@ class BHVariables(models.Model):
     updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_variables'
 
 
-class BHZones(models.Model):
+class RvZones(models.Model):
     zoneid = models.AutoField(primary_key=True)
     affiliateid = models.IntegerField(blank=True, null=True)
     zonename = models.CharField(max_length=245)
@@ -904,8 +930,6 @@ class BHZones(models.Model):
     capping = models.IntegerField()
     session_capping = models.IntegerField()
     what = models.TextField()
-    as_zone_id = models.IntegerField(blank=True, null=True)
-    is_in_ad_direct = models.SmallIntegerField()
     rate = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
     pricing = models.CharField(max_length=50)
     oac_category_id = models.IntegerField(blank=True, null=True)
@@ -913,4 +937,5 @@ class BHZones(models.Model):
     show_capped_no_cookie = models.SmallIntegerField()
 
     class Meta:
-        managed = True
+        managed = False
+        db_table = 'rv_zones'
