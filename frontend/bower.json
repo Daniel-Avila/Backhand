@@ -19,6 +19,7 @@
     "jquery": "",
     "angular-sanitize": "",
     "angular-route": "",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "ui-bootstrap": "~0.13.1"
   }
 }
