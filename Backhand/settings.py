@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'rest_auth',
     'backhand',
+    'users',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
@@ -120,3 +121,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+USER_TYPES = {'manager': 2, 'admin': 1, 'advertiser': 3}

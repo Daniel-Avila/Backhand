@@ -852,24 +852,6 @@ class RvUserlog(models.Model):
         db_table = 'rv_userlog'
 
 
-class RvUsers(models.Model):
-    user_id = models.AutoField(primary_key=True)
-    contact_name = models.CharField(max_length=255)
-    email_address = models.CharField(max_length=64)
-    username = models.CharField(unique=True, max_length=64, blank=True, null=True)
-    password = models.CharField(max_length=64, blank=True, null=True)
-    language = models.CharField(max_length=5, blank=True, null=True)
-    default_account_id = models.IntegerField(blank=True, null=True)
-    comments = models.TextField(blank=True, null=True)
-    active = models.SmallIntegerField()
-    sso_user_id = models.IntegerField(unique=True, blank=True, null=True)
-    date_created = models.DateTimeField(blank=True, null=True)
-    date_last_login = models.DateTimeField(blank=True, null=True)
-    email_updated = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'rv_users'
 
 
 class RvVariablePublisher(models.Model):
