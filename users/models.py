@@ -13,11 +13,19 @@ class RvUsersManager(BaseUserManager):
         new_manager.save()
         return new_manager
 
-    def create_advertiser(self, email, username, contact_name):
-        pass
+    def create_advertiser(self, email, username, contact_name, password):
+        new_advertiser = self._create_user(email, username, contact_name,
+                                           settings.USER_TYPES['advertiser'])
+        new_advertiser.set_password(password)
+        new_advertiser.save()
+        return new_advertiser
 
-    def create_admin(self, email, username, contact_name):
-        pass
+    def create_admin(self, email, username, contact_name, password):
+        new_admin = self._create_user(email, username, contact_name,
+                                      settings.USER_TYPES['admin'])
+        new_admin.set_password(password)
+        new_admin.save()
+        return new_admin
 
     def _create_user(self, email, username, contact_name, type):
         user = RvUsers(email_address=email, username=username,

@@ -23,11 +23,11 @@ class TestRVUsersManager(TestCase):
         '''Can we add a new user as an advertiser?'''
         args = ['sparky@advertiser', 'sparky adv', 'sparkyadv', 'password']
         expected = 3
-        new_user = models.RvUsersManager.create_advertiser(*args)
+        new_user = self.manager.create_advertiser(*args)
         self.assertEqual(new_user.default_account_id, expected)
 
     def test_new_admin(self):
         args = ['sparky@admin', 'sparky admin', 'sparkyadmin', 'password']
         expected = 1
-        new_user = models.RvUsersManager.create_admin(*args)
+        new_user = self.manager.create_admin(*args)
         self.assertEqual(new_user.default_account_id, expected)
